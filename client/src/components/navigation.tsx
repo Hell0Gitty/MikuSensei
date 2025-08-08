@@ -55,6 +55,13 @@ export default function Navigation() {
             >
               Lessons
             </button>
+            <button 
+              onClick={() => scrollToSection('contact')}
+              className="text-miku-text hover:text-miku-primary transition-colors"
+              data-testid="nav-contact"
+            >
+              Contact
+            </button>
             <Button 
               className="bg-miku-primary text-white px-6 py-2 rounded-full hover:bg-opacity-90 transition-all"
               data-testid="btn-start-learning"
@@ -104,6 +111,13 @@ export default function Navigation() {
               data-testid="mobile-nav-lessons"
             >
               Lessons
+            </button>
+            <button 
+              onClick={() => scrollToSection('contact')}
+              className="block w-full text-left px-4 py-2 text-miku-text hover:text-miku-primary transition-colors"
+              data-testid="mobile-nav-contact"
+            >
+              Contact
             </button>
             <div className="px-4 py-2">
               <Button 

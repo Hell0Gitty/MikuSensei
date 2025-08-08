@@ -3,6 +3,7 @@ import HeroSection from "@/components/hero-section";
 import TeacherProfile from "@/components/teacher-profile";
 import DifficultyLevels from "@/components/difficulty-levels";
 import LevelOneCourse from "@/components/level-one-course";
+import ContactSection from "@/components/contact-section";
 import Footer from "@/components/footer";
 
 export default function Home() {
@@ -13,6 +14,7 @@ export default function Home() {
       <TeacherProfile />
       <DifficultyLevels />
       <LevelOneCourse />
+      <ContactSection />
       <Footer />
     </div>
   );
