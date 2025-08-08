@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miku Sensei - Learn Japanese with Hatsune Miku</title>
+    <meta name="description" content="Learn Japanese with Hatsune Miku through structured 1-on-1 sessions. From complete beginner to fluent speaker with $75/hour expert teaching.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --miku-primary: #39C5BB;
+            --miku-secondary: #FF6B9D;
+            --miku-accent: #FFE66D;
+            --miku-bg: #F8F9FA;
+            --miku-text: #2D3436;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--miku-bg);
+            color: var(--miku-text);
+        }
+        
+        .font-nunito {
+            font-family: 'Nunito', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #39C5BB 0%, #FF6B9D 100%);
+        }
+        
+        .anime-border {
+            border: 3px solid #FFE66D;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(57, 197, 187, 0.2);
+        }
+        
+        .card-hover {
+            transition: transform 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .animate-bounce-slow {
+            animation: bounce-slow 2s infinite;
+        }
+        
+        .animate-pulse-slow {
+            animation: pulse-slow 3s infinite;
+        }
+        
+        /* Tailwind custom colors */
+        .bg-miku-primary { background-color: var(--miku-primary); }
+        .bg-miku-secondary { background-color: var(--miku-secondary); }
+        .bg-miku-accent { background-color: var(--miku-accent); }
+        .bg-miku-bg { background-color: var(--miku-bg); }
+        .bg-miku-text { background-color: var(--miku-text); }
+        
+        .text-miku-primary { color: var(--miku-primary); }
+        .text-miku-secondary { color: var(--miku-secondary); }
+        .text-miku-accent { color: var(--miku-accent); }
+        .text-miku-bg { color: var(--miku-bg); }
+        .text-miku-text { color: var(--miku-text); }
+        
+        .border-miku-primary { border-color: var(--miku-primary); }
+        .border-miku-secondary { border-color: var(--miku-secondary); }
+        .border-miku-accent { border-color: var(--miku-accent); }
+        
+        /* Button styles */
+        .btn-primary {
+            background-color: var(--miku-primary);
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: scale(1.05);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--miku-primary);
+            padding: 0.75rem 2rem;
+            border: 2px solid var(--miku-primary);
+            border-radius: 9999px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--miku-primary);
+            color: white;
+        }
+        
+        /* Mobile menu styles */
+        .mobile-menu {
+            display: none;
+        }
+        
+        .mobile-menu.active {
+            display: block;
+        }
+    </style>
+    
+    <script>
+        // Tailwind config
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'miku-primary': '#39C5BB',
+                        'miku-secondary': '#FF6B9D', 
+                        'miku-accent': '#FFE66D',
+                        'miku-bg': '#F8F9FA',
+                        'miku-text': '#2D3436'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50" data-testid="navigation">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-miku-primary to-miku-secondary rounded-full flex items-center justify-center">
+                        <i data-lucide="music" class="text-white text-lg"></i>
+                    </div>
+                    <span class="font-nunito font-bold text-xl text-miku-primary" data-testid="logo">
+                        Miku Sensei
+                    </span>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <button onclick="scrollToSection('home')" class="text-miku-text hover:text-miku-primary transition-colors" data-testid="nav-home">Home</button>
+                    <button onclick="scrollToSection('teacher')" class="text-miku-text hover:text-miku-primary transition-colors" data-testid="nav-teacher">Teacher</button>
+                    <button onclick="scrollToSection('levels')" class="text-miku-text hover:text-miku-primary transition-colors" data-testid="nav-levels">Levels</button>
+                    <button onclick="scrollToSection('lessons')" class="text-miku-text hover:text-miku-primary transition-colors" data-testid="nav-lessons">Lessons</button>
+                    <button onclick="scrollToSection('contact')" class="text-miku-text hover:text-miku-primary transition-colors" data-testid="nav-contact">Contact</button>
+                    <button class="btn-primary" data-testid="btn-start-learning">Start Learning</button>
+                </div>
+                
+                <div class="md:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-miku-text hover:text-miku-primary" data-testid="btn-mobile-menu">
+                        <i data-lucide="menu" class="text-xl" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile menu -->
+            <div id="mobile-menu" class="mobile-menu md:hidden border-t border-gray-200 py-4 space-y-2" data-testid="mobile-menu">
+                <button onclick="scrollToSection('home')" class="block w-full text-left px-4 py-2 text-miku-text hover:text-miku-primary transition-colors" data-testid="mobile-nav-home">Home</button>
+                <button onclick="scrollToSection('teacher')" class="block w-full text-left px-4 py-2 text-miku-text hover:text-miku-primary transition-colors" data-testid="mobile-nav-teacher">Teacher</button>
+                <button onclick="scrollToSection('levels')" class="block w-full text-left px-4 py-2 text-miku-text hover:text-miku-primary transition-colors" data-testid="mobile-nav-levels">Levels</button>
+                <button onclick="scrollToSection('lessons')" class="block w-full text-left px-4 py-2 text-miku-text hover:text-miku-primary transition-colors" data-testid="mobile-nav-lessons">Lessons</button>
+                <button onclick="scrollToSection('contact')" class="block w-full text-left px-4 py-2 text-miku-text hover:text-miku-primary transition-colors" data-testid="mobile-nav-contact">Contact</button>
+                <div class="px-4 py-2">
+                    <button class="w-full btn-primary" data-testid="mobile-btn-start-learning">Start Learning</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="gradient-bg relative overflow-hidden min-h-screen flex items-center">
+        <div class="absolute inset-0 bg-black bg-opacity-10"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="text-white">
+                    <h1 class="font-nunito font-bold text-5xl md:text-6xl lg:text-7xl mb-6 leading-tight" data-testid="hero-title">
+                        Learn Japanese with 
+                        <span class="text-miku-accent animate-pulse-slow"> Miku Sensei!</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl mb-8 leading-relaxed opacity-90" data-testid="hero-description">
+                        Master Japanese through structured 1-on-1 sessions with your favorite virtual teacher. 
+                        From complete beginner to fluent speaker!
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 mb-8">
+                        <button class="bg-miku-accent text-miku-text font-semibold px-8 py-4 rounded-full hover:bg-opacity-90 transition-all transform hover:scale-105" data-testid="btn-start-level-1">
+                            <i data-lucide="play" class="inline mr-2 h-4 w-4"></i>
+                            Start Level 1
+                        </button>
+                        <button class="border-2 border-white text-white font-semibold px-8 py-4 rounded-full hover:bg-white hover:text-miku-primary transition-all" data-testid="btn-meet-teacher">
+                            <i data-lucide="user" class="inline mr-2 h-4 w-4"></i>
+                            Meet Your Teacher
+                        </button>
+                    </div>
+                    
+                    <div class="flex items-center space-x-6 text-sm">
+                        <div class="flex items-center" data-testid="stat-experience">
+                            <i data-lucide="star" class="text-miku-accent mr-2 h-4 w-4"></i>
+                            <span>15+ Years Experience</span>
+                        </div>
+                        <div class="flex items-center" data-testid="stat-students">
+                            <i data-lucide="users" class="text-miku-accent mr-2 h-4 w-4"></i>
+                            <span>1000+ Happy Students</span>
+                        </div>
+                        <div class="flex items-center" data-testid="stat-price">
+                            <i data-lucide="dollar-sign" class="text-miku-accent mr-2 h-4 w-4"></i>
+                            <span>$75/hour</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-center lg:justify-end">
+                    <div class="relative animate-float">
+                        <img src="miku.png" alt="Hatsune Miku as Japanese teacher" class="w-80 h-96 object-cover rounded-3xl anime-border" data-testid="hero-image" id="hero-miku-image">
+                        <div class="absolute -bottom-4 -right-4 bg-miku-accent text-miku-text px-4 py-2 rounded-full font-semibold shadow-lg" data-testid="ready-badge">
+                            <i data-lucide="heart" class="inline mr-2 h-4 w-4"></i>
+                            Ready to teach!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Floating Japanese characters -->
+        <div class="absolute top-20 left-10 text-miku-accent text-6xl opacity-20 animate-bounce-slow select-none" data-testid="float-char-1">あ</div>
+        <div class="absolute bottom-20 right-20 text-miku-accent text-4xl opacity-20 animate-pulse-slow select-none" data-testid="float-char-2">か</div>
+        <div class="absolute top-1/2 left-5 text-miku-accent text-5xl opacity-20 animate-float select-none" data-testid="float-char-3">さ</div>
+    </section>
+
+    <!-- Teacher Profile -->
+    <section id="teacher" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-nunito font-bold text-4xl md:text-5xl text-miku-primary mb-4" data-testid="teacher-title">
+                    Meet Your Sensei
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto" data-testid="teacher-subtitle">
+                    Learn from the most beloved virtual teacher in the world. Hatsune Miku brings 
+                    15+ years of teaching experience with a fun, engaging approach to Japanese language learning.
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600" alt="Hatsune Miku teaching materials and setup" class="w-full h-96 object-cover rounded-3xl shadow-2xl" data-testid="teacher-image">
+                    
+                    <div class="absolute -bottom-8 -right-8 bg-white p-6 rounded-2xl shadow-xl border-l-4 border-miku-primary" data-testid="students-stat">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-miku-primary">1000+</div>
+                            <div class="text-sm text-gray-600">Students Taught</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="space-y-8">
+                    <div>
+                        <h3 class="font-nunito font-bold text-3xl text-miku-text mb-4" data-testid="teacher-name">
+                            Hatsune Miku Sensei
+                            <span class="text-miku-secondary ml-2">🎤</span>
+                        </h3>
+                        <p class="text-lg text-gray-600 mb-6" data-testid="teacher-bio">
+                            Konnichiwa! I'm Miku, your dedicated Japanese language teacher. With over 15 years 
+                            of experience teaching students from all around the world, I'll guide you through 
+                            your Japanese learning journey with patience, creativity, and lots of fun!
+                        </p>
+                    </div>
+                    
+                    <!-- Teacher stats -->
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="bg-miku-bg p-6 rounded-2xl text-center card-hover" data-testid="stat-years">
+                            <div class="text-2xl text-miku-primary mb-2">
+                                <i data-lucide="clock" class="h-6 w-6 mx-auto"></i>
+                            </div>
+                            <div class="font-bold text-2xl text-miku-text">15+</div>
+                            <div class="text-sm text-gray-600">Years Experience</div>
+                        </div>
+                        
+                        <div class="bg-miku-bg p-6 rounded-2xl text-center card-hover" data-testid="stat-rate">
+                            <div class="text-2xl text-miku-secondary mb-2">
+                                <i data-lucide="dollar-sign" class="h-6 w-6 mx-auto"></i>
+                            </div>
+                            <div class="font-bold text-2xl text-miku-text">$75</div>
+                            <div class="text-sm text-gray-600">Per Hour</div>
+                        </div>
+                        
+                        <div class="bg-miku-bg p-6 rounded-2xl text-center card-hover" data-testid="stat-rating">
+                            <div class="text-2xl text-miku-accent mb-2">
+                                <i data-lucide="star" class="h-6 w-6 mx-auto"></i>
+                            </div>
+                            <div class="font-bold text-2xl text-miku-text">4.9</div>
+                            <div class="text-sm text-gray-600">Student Rating</div>
+                        </div>
+                        
+                        <div class="bg-miku-bg p-6 rounded-2xl text-center card-hover" data-testid="stat-levels">
+                            <div class="text-2xl text-miku-primary mb-2">
+                                <i data-lucide="languages" class="h-6 w-6 mx-auto"></i>
+                            </div>
+                            <div class="font-bold text-2xl text-miku-text">5</div>
+                            <div class="text-sm text-gray-600">Skill Levels</div>
+                        </div>
+                    </div>
+                    
+                    <!-- CTA buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button class="btn-primary flex-1" data-testid="btn-book-session">
+                            <i data-lucide="calendar" class="inline mr-2 h-4 w-4"></i>
+                            Book a Session
+                        </button>
+                        <button class="btn-outline flex-1" data-testid="btn-send-message">
+                            <i data-lucide="message-circle" class="inline mr-2 h-4 w-4"></i>
+                            Send Message
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Difficulty Levels -->
+    <section id="levels" class="py-20 bg-miku-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-nunito font-bold text-4xl md:text-5xl text-miku-primary mb-4" data-testid="levels-title">
+                    Choose Your Level
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto" data-testid="levels-subtitle">
+                    Our structured learning path takes you from complete beginner to fluent speaker. 
+                    Each level is carefully designed to build upon previous knowledge.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-6" id="levels-container">
+                <!-- Levels will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Level 1 Course -->
+    <section id="lessons" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center bg-miku-accent text-miku-text px-4 py-2 rounded-full font-semibold mb-4" data-testid="course-badge">
+                    <i data-lucide="award" class="mr-2 h-4 w-4"></i>
+                    Level 1: Newcomers Course
+                </div>
+                <h2 class="font-nunito font-bold text-4xl md:text-5xl text-miku-primary mb-4" data-testid="course-title">
+                    Your Japanese Journey Starts Here
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto" data-testid="course-description">
+                    Master the fundamentals with our comprehensive Level 1 course. Perfect for complete beginners 
+                    with zero Japanese knowledge.
+                </p>
+            </div>
+            
+            <!-- Course Overview -->
+            <div class="bg-miku-bg p-8 rounded-3xl mb-12">
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="text-center" data-testid="course-stat-duration">
+                        <div class="w-16 h-16 bg-miku-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="clock" class="text-white text-xl"></i>
+                        </div>
+                        <h3 class="font-nunito font-bold text-xl mb-2">12 Weeks</h3>
+                        <p class="text-gray-600">Complete duration</p>
+                    </div>
+                    
+                    <div class="text-center" data-testid="course-stat-lessons">
+                        <div class="w-16 h-16 bg-miku-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="book" class="text-white text-xl"></i>
+                        </div>
+                        <h3 class="font-nunito font-bold text-xl mb-2">24 Lessons</h3>
+                        <p class="text-gray-600">Structured learning</p>
+                    </div>
+                    
+                    <div class="text-center" data-testid="course-stat-certificate">
+                        <div class="w-16 h-16 bg-miku-accent rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="award" class="text-miku-text text-xl"></i>
+                        </div>
+                        <h3 class="font-nunito font-bold text-xl mb-2">Certificate</h3>
+                        <p class="text-gray-600">Upon completion</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Progress Tracker -->
+            <div class="bg-white border-2 border-miku-primary rounded-2xl p-6 mb-12" data-testid="progress-tracker">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-nunito font-bold text-xl text-miku-text">Your Progress</h3>
+                    <span class="text-miku-primary font-semibold" data-testid="progress-percentage">8%</span>
+                </div>
+                
+                <div class="bg-gray-200 rounded-full h-4 mb-4">
+                    <div class="bg-gradient-to-r from-miku-primary to-miku-secondary h-4 rounded-full transition-all duration-300" style="width: 8%" data-testid="progress-bar"></div>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                    <div data-testid="progress-completed">
+                        <span class="text-gray-600">Lessons Completed:</span>
+                        <span class="font-semibold ml-2">2/24</span>
+                    </div>
+                    <div data-testid="progress-characters">
+                        <span class="text-gray-600">Characters Learned:</span>
+                        <span class="font-semibold ml-2">10/92</span>
+                    </div>
+                    <div data-testid="progress-vocabulary">
+                        <span class="text-gray-600">Vocabulary:</span>
+                        <span class="font-semibold ml-2">8/200</span>
+                    </div>
+                    <div data-testid="progress-quiz">
+                        <span class="text-gray-600">Quiz Score:</span>
+                        <span class="font-semibold ml-2">91%</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Lesson Cards -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="lessons-container">
+                <!-- Lessons will be populated by JavaScript -->
+            </div>
+            
+            <!-- Action buttons -->
+            <div class="text-center mt-12">
+                <div class="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
+                    <button class="btn-primary flex-1" data-testid="btn-continue-learning">
+                        <i data-lucide="play" class="inline mr-2 h-4 w-4"></i>
+                        Continue Learning
+                    </button>
+                    <button class="btn-outline flex-1" data-testid="btn-schedule-session">
+                        <i data-lucide="clock" class="inline mr-2 h-4 w-4"></i>
+                        Schedule Session
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-miku-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-nunito font-bold text-4xl md:text-5xl text-miku-primary mb-4" data-testid="contact-title">
+                    Schedule Your Session
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto" data-testid="contact-subtitle">
+                    Ready to start your Japanese learning journey? Book a 15-minute consultation 
+                    with Helen to discuss your goals and find the perfect learning plan for you.
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-3 gap-8 mb-12">
+                <div class="bg-white p-6 rounded-2xl text-center shadow-lg card-hover" data-testid="contact-feature-1">
+                    <div class="w-16 h-16 bg-miku-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="calendar" class="text-white text-xl"></i>
+                    </div>
+                    <h3 class="font-nunito font-bold text-xl mb-2">Easy Scheduling</h3>
+                    <p class="text-gray-600">Pick a time that works for you from available slots</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-2xl text-center shadow-lg card-hover" data-testid="contact-feature-2">
+                    <div class="w-16 h-16 bg-miku-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="clock" class="text-white text-xl"></i>
+                    </div>
+                    <h3 class="font-nunito font-bold text-xl mb-2">15-Minute Consultation</h3>
+                    <p class="text-gray-600">Quick chat to understand your learning needs</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-2xl text-center shadow-lg card-hover" data-testid="contact-feature-3">
+                    <div class="w-16 h-16 bg-miku-accent rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="message-circle" class="text-miku-text text-xl"></i>
+                    </div>
+                    <h3 class="font-nunito font-bold text-xl mb-2">Personal Guidance</h3>
+                    <p class="text-gray-600">Get personalized recommendations for your Japanese journey</p>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-3xl shadow-2xl p-8">
+                <div class="text-center mb-8">
+                    <h3 class="font-nunito font-bold text-2xl text-miku-text mb-2" data-testid="calendly-title">
+                        Schedule a 15-Minute Meeting with Helen
+                    </h3>
+                    <p class="text-gray-600">Choose your preferred time slot below</p>
+                </div>
+                
+                <div class="max-w-5xl mx-auto">
+                    <iframe 
+                        src="https://calendly.com/helenwchou/15min" 
+                        width="100%" 
+                        height="800" 
+                        frameborder="0" 
+                        scrolling="auto"
+                        class="rounded-xl"
+                        title="Schedule a meeting with Helen"
+                        data-testid="calendly-iframe">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-miku-text text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="col-span-2">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-r from-miku-primary to-miku-secondary rounded-full flex items-center justify-center">
+                            <i data-lucide="music" class="text-white text-xl"></i>
+                        </div>
+                        <span class="font-nunito font-bold text-2xl" data-testid="footer-logo">Miku Sensei</span>
+                    </div>
+                    <p class="text-gray-300 mb-6 max-w-md" data-testid="footer-description">
+                        Learn Japanese with the world's favorite virtual teacher. Structured lessons, 
+                        personalized feedback, and cultural insights in every session.
+                    </p>
+                    <div class="flex space-x-4">
+                        <button class="w-10 h-10 bg-miku-primary rounded-full flex items-center justify-center hover:bg-opacity-80 transition-all" data-testid="social-twitter">
+                            <i data-lucide="twitter" class="h-4 w-4"></i>
+                        </button>
+                        <button class="w-10 h-10 bg-miku-secondary rounded-full flex items-center justify-center hover:bg-opacity-80 transition-all" data-testid="social-youtube">
+                            <i data-lucide="youtube" class="h-4 w-4"></i>
+                        </button>
+                        <button class="w-10 h-10 bg-miku-accent rounded-full flex items-center justify-center hover:bg-opacity-80 transition-all" data-testid="social-discord">
+                            <i data-lucide="message-square" class="h-4 w-4 text-miku-text"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="font-nunito font-bold text-lg mb-4" data-testid="footer-learning-title">Learning</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-miku-primary transition-colors" data-testid="footer-all-levels">All Levels</a></li>
+                        <li><a href="#" class="hover:text-miku-primary transition-colors" data-testid="footer-beginner-course">Beginner Course</a></li>
+                        <li><a href="#" class="hover:text-miku-primary transition-colors" data-testid="footer-practice">Practice Exercises</a></li>
+                        <li><a href="#" class="hover:text-miku-primary transition-colors" data-testid="footer-cultural">Cultural Lessons</a></li>
+                        <li><a href="#" class="hover:text-miku-primary transition-colors" data-testid="footer-progress">Progress Tracking</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-nunito font-bold text-lg mb-4" data-testid="footer-support-title">Support</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-miku-primary transition-colors" data-testid="footer-help">Help Center</a></li>
+                        <li><a href="#" class="hover:text-miku-primary transition-colors" data-testid="footer-book">Book a Session</a></li>
+                        <li><a href="#" class="hover:text-miku-primary transition-colors" data-testid="footer-contact">Contact Miku</a></li>
+                        <li><a href="#" class="hover:text-miku-primary transition-colors" data-testid="footer-tech-support">Technical Support</a></li>
+                        <li><a href="#" class="hover:text-miku-primary transition-colors" data-testid="footer-community">Community</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm" data-testid="footer-copyright">
+                    © 2024 Miku Sensei. All rights reserved. Made with 💙 for Japanese learners worldwide.
+                </p>
+                <div class="flex items-center space-x-6 mt-4 md:mt-0 text-sm text-gray-400">
+                    <a href="#" class="hover:text-miku-primary transition-colors" data-testid="footer-privacy">Privacy Policy</a>
+                    <a href="#" class="hover:text-miku-primary transition-colors" data-testid="footer-terms">Terms of Service</a>
+                    <a href="#" class="hover:text-miku-primary transition-colors" data-testid="footer-cookies">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Mobile menu toggle
+        let mobileMenuOpen = false;
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            
+            mobileMenuOpen = !mobileMenuOpen;
+            
+            if (mobileMenuOpen) {
+                mobileMenu.classList.add('active');
+                menuIcon.setAttribute('data-lucide', 'x');
+            } else {
+                mobileMenu.classList.remove('active');
+                menuIcon.setAttribute('data-lucide', 'menu');
+            }
+            
+            lucide.createIcons();
+        }
+
+        // Smooth scrolling
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            
+            // Close mobile menu if open
+            if (mobileMenuOpen) {
+                toggleMobileMenu();
+            }
+        }
+
+        // Static data for levels and lessons
+        const levelsData = [
+            {
+                id: 1,
+                name: "Newcomers",
+                description: "Complete Beginners",
+                color: "#FFE66D",
+                features: ["Hiragana & Katakana", "Basic Greetings", "Numbers 1-100", "Essential Vocabulary"],
+                isUnlocked: true,
+            },
+            {
+                id: 2,
+                name: "Beginners", 
+                description: "Basic Conversation",
+                color: "#39C5BB",
+                features: ["Simple Sentences", "Basic Kanji (50)", "Self Introduction", "Present Tense"],
+                isUnlocked: false,
+            },
+            {
+                id: 3,
+                name: "Intermediate",
+                description: "Everyday Communication", 
+                color: "#FF6B9D",
+                features: ["Past & Future Tense", "Kanji (200+)", "Complex Sentences", "Cultural Context"],
+                isUnlocked: false,
+            },
+            {
+                id: 4,
+                name: "Advanced",
+                description: "Professional Level",
+                color: "#8B5CF6", 
+                features: ["Business Japanese", "Kanji (500+)", "Formal Speech", "Literature"],
+                isUnlocked: false,
+            },
+            {
+                id: 5,
+                name: "Fluent",
+                description: "Native-like Proficiency",
+                color: "#F59E0B",
+                features: ["Native Expressions", "Kanji Mastery", "Regional Dialects", "Cultural Nuances"],
+                isUnlocked: false,
+            },
+        ];
+
+        const lessonsData = [
+            {
+                id: 1,
+                title: "Introduction & あいうえお",
+                description: "Basic Greetings & First Characters",
+                level: 1,
+                content: {
+                    characters: ["あ", "い", "う", "え", "お"],
+                    vocabulary: ["こんにちは", "おはよう", "こんばんは"],
+                    concepts: ["Basic Greetings", "Pronunciation", "Writing Practice"],
+                },
+                isCompleted: true,
+                score: 95,
+            },
+            {
+                id: 2,
+                title: "かきくけこ & Numbers",
+                description: "Numbers 1-10 & K-sounds",
+                level: 1,
+                content: {
+                    characters: ["か", "き", "く", "け", "こ"],
+                    vocabulary: ["いち", "に", "さん", "よん", "ご"],
+                    concepts: ["Numbers 1-10", "K-sound characters", "Writing Practice"],
+                },
+                isCompleted: true,
+                score: 88,
+            },
+            {
+                id: 3,
+                title: "さしすせそ & Family", 
+                description: "Family Members & S-sounds",
+                level: 1,
+                content: {
+                    characters: ["さ", "し", "す", "せ", "そ"],
+                    vocabulary: ["おかあさん", "おとうさん", "あね", "あに"],
+                    concepts: ["Family Members", "S-sound characters", "Cultural Context"],
+                },
+                isCompleted: false,
+                score: 0,
+            },
+            {
+                id: 4,
+                title: "たちつてと & Time",
+                description: "Time Expressions & T-sounds",
+                level: 1,
+                content: {
+                    characters: ["た", "ち", "つ", "て", "と"],
+                    vocabulary: ["あさ", "ひる", "よる", "いま"],
+                    concepts: ["Time Expressions", "T-sound characters", "Daily Schedule"],
+                },
+                isCompleted: false,
+                score: 0,
+            },
+            {
+                id: 5,
+                title: "なにぬねの & Food",
+                description: "Food Vocabulary & N-sounds", 
+                level: 1,
+                content: {
+                    characters: ["な", "に", "ぬ", "ね", "の"],
+                    vocabulary: ["ごはん", "みず", "おちゃ", "たべもの"],
+                    concepts: ["Food Vocabulary", "N-sound characters", "Restaurant Phrases"],
+                },
+                isCompleted: false,
+                score: 0,
+            },
+        ];
+
+        // Populate levels
+        function populateLevels() {
+            const container = document.getElementById('levels-container');
+            container.innerHTML = '';
+            
+            levelsData.forEach((level, index) => {
+                const borderColor = index === 0 ? 'border-miku-accent' : 
+                                  index === 1 ? 'border-miku-primary' : 
+                                  index === 2 ? 'border-miku-secondary' : 
+                                  index === 3 ? 'border-purple-500' : 'border-amber-500';
+                
+                const bgColor = index === 0 ? 'bg-miku-accent' : 
+                               index === 1 ? 'bg-miku-primary' : 
+                               index === 2 ? 'bg-miku-secondary' : 
+                               index === 3 ? 'bg-purple-500' : 'bg-amber-500';
+                
+                const textColor = index === 0 ? 'text-miku-text' : 'text-white';
+                
+                const checkColor = index === 0 ? 'text-miku-accent' : 
+                                  index === 1 ? 'text-miku-primary' : 
+                                  index === 2 ? 'text-miku-secondary' : 
+                                  index === 3 ? 'text-purple-500' : 'text-amber-500';
+                
+                const card = document.createElement('div');
+                card.className = `bg-white p-6 rounded-2xl shadow-lg card-hover border-l-4 ${borderColor}`;
+                card.setAttribute('data-testid', `level-card-${level.id}`);
+                
+                card.innerHTML = `
+                    <div class="text-center mb-4">
+                        <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3 ${bgColor}">
+                            <span class="text-2xl font-bold ${textColor}">${level.id}</span>
+                        </div>
+                        <h3 class="font-nunito font-bold text-xl text-miku-text" data-testid="level-name-${level.id}">${level.name}</h3>
+                        <p class="text-sm text-gray-500" data-testid="level-description-${level.id}">${level.description}</p>
+                    </div>
+                    
+                    <div class="space-y-3 mb-6">
+                        ${level.features.map((feature, featureIndex) => `
+                            <div class="flex items-center text-sm" data-testid="level-feature-${level.id}-${featureIndex}">
+                                <i data-lucide="check" class="mr-2 h-4 w-4 ${checkColor}"></i>
+                                <span>${feature}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    ${level.isUnlocked ? `
+                        <button class="w-full font-semibold py-3 rounded-full hover:bg-opacity-90 transition-all ${index === 0 ? 'bg-miku-accent text-miku-text' : 'bg-gray-200 text-gray-500 cursor-not-allowed'}" 
+                               ${index !== 0 ? 'disabled' : ''} data-testid="btn-level-${level.id}">
+                            ${index === 0 ? 'Start Here' : `Complete Level ${index}`}
+                        </button>
+                    ` : `
+                        <button disabled class="w-full bg-gray-200 text-gray-500 font-semibold py-3 rounded-full cursor-not-allowed" data-testid="btn-level-locked-${level.id}">
+                            Complete Level ${index}
+                        </button>
+                    `}
+                `;
+                
+                container.appendChild(card);
+            });
+            
+            lucide.createIcons();
+        }
+
+        // Populate lessons
+        function populateLessons() {
+            const container = document.getElementById('lessons-container');
+            container.innerHTML = '';
+            
+            lessonsData.forEach((lesson, index) => {
+                const borderColor = lesson.isCompleted ? 'border-green-200' : 
+                                  index === 2 ? 'border-miku-primary' : 'border-gray-200';
+                
+                const circleColor = lesson.isCompleted ? 'bg-green-500' : 
+                                   index === 2 ? 'bg-miku-primary animate-pulse-slow' : 'bg-gray-300';
+                
+                const statusBadge = lesson.isCompleted ? 'bg-green-100 text-green-800' : 
+                                   index === 2 ? 'bg-miku-primary text-white' : 'bg-gray-200 text-gray-600';
+                
+                const statusText = lesson.isCompleted ? 'Completed' : 
+                                  index === 2 ? 'Current' : 'Locked';
+                
+                const iconName = lesson.isCompleted ? 'check' : 
+                                index === 2 ? 'play' : 'lock';
+                
+                const iconColor = lesson.isCompleted ? 'text-white' : 
+                                 index === 2 ? 'text-white' : 'text-gray-500';
+                
+                const card = document.createElement('div');
+                card.className = `bg-white rounded-2xl p-6 card-hover shadow-lg border-2 ${borderColor}`;
+                card.setAttribute('data-testid', `lesson-card-${lesson.id}`);
+                
+                card.innerHTML = `
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center mr-3 ${circleColor}">
+                                <i data-lucide="${iconName}" class="${iconColor} h-5 w-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-nunito font-bold text-lg" data-testid="lesson-title-${lesson.id}">Lesson ${lesson.id}</h3>
+                                <p class="text-sm text-gray-600" data-testid="lesson-description-${lesson.id}">${lesson.description}</p>
+                            </div>
+                        </div>
+                        <span class="text-xs px-2 py-1 rounded-full ${statusBadge}" data-testid="lesson-status-${lesson.id}">${statusText}</span>
+                    </div>
+                    
+                    <div class="space-y-2 mb-4">
+                        ${lesson.content.concepts.map((concept, conceptIndex) => `
+                            <div class="flex items-center text-sm" data-testid="lesson-concept-${lesson.id}-${conceptIndex}">
+                                <i data-lucide="check" class="mr-2 h-4 w-4 ${
+                                    lesson.isCompleted ? 'text-green-500' : 
+                                    index === 2 ? 'text-miku-primary' : 'text-gray-400'
+                                }"></i>
+                                <span class="${index > 2 ? 'text-gray-500' : ''}">${concept}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    ${lesson.isCompleted ? `
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-600" data-testid="lesson-score-${lesson.id}">Score: ${lesson.score}%</span>
+                            <button class="text-miku-primary hover:text-miku-secondary transition-colors" data-testid="btn-review-${lesson.id}">
+                                <i data-lucide="rotate-ccw" class="inline mr-1 h-4 w-4"></i>
+                                Review
+                            </button>
+                        </div>
+                    ` : index === 2 ? `
+                        <button class="w-full bg-miku-primary text-white font-semibold py-3 rounded-full hover:bg-opacity-90 transition-all" data-testid="btn-continue-${lesson.id}">
+                            <i data-lucide="play" class="inline mr-2 h-4 w-4"></i>
+                            Continue Lesson
+                        </button>
+                    ` : `
+                        <div class="text-center text-sm text-gray-500" data-testid="lesson-unlock-requirement-${lesson.id}">
+                            Complete Lesson ${index + 1} to unlock
+                        </div>
+                    `}
+                `;
+                
+                container.appendChild(card);
+            });
+            
+            // Add "More lessons" card
+            const moreCard = document.createElement('div');
+            moreCard.className = 'bg-gradient-to-br from-miku-primary to-miku-secondary p-6 rounded-2xl text-white text-center';
+            moreCard.setAttribute('data-testid', 'more-lessons-card');
+            moreCard.innerHTML = `
+                <div class="mb-4">
+                    <i data-lucide="plus" class="h-16 w-16 mx-auto opacity-75"></i>
+                </div>
+                <h3 class="font-nunito font-bold text-xl mb-2">19 More Lessons</h3>
+                <p class="text-sm opacity-90 mb-4">Continue your journey through hiragana, basic vocabulary, and essential Japanese concepts</p>
+                <div class="text-xs opacity-75">Unlock as you progress</div>
+            `;
+            container.appendChild(moreCard);
+            
+            lucide.createIcons();
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            populateLevels();
+            populateLessons();
+            
+            // Load the Miku image if provided
+            const mikuImageElement = document.getElementById('hero-miku-image');
+            // You would replace this with the actual base64 or image URL
+            // mikuImageElement.src = 'path/to/miku/image.png';
+        });
+    </script>
+</body>
+</html>

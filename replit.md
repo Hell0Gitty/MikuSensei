@@ -1,6 +1,6 @@
 # Overview
 
-This is a Japanese language learning application called "Miku Sensei" that features Hatsune Miku as the virtual teacher. The app provides structured Japanese lessons through different difficulty levels, starting from complete beginners to advanced learners. Users can track their progress, complete lessons, and learn through a combination of characters (Hiragana/Katakana), vocabulary, and interactive content.
+This is a Japanese language learning application called "Miku Sensei" that features Hatsune Miku as the virtual teacher. Originally built as a React application, it has been converted to a static HTML5 site. The app provides structured Japanese lessons through different difficulty levels, starting from complete beginners to advanced learners. Users can track their progress, complete lessons, and learn through a combination of characters (Hiragana/Katakana), vocabulary, and interactive content. The site includes Calendly scheduling integration for booking consultations.
 
 # User Preferences
 
