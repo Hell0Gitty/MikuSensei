@@ -1,5 +1,6 @@
 import { Play, User, Star, Users, DollarSign, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import mikuImage from "@assets/ChatGPT Image Aug 7, 2025, 08_50_01 PM_1754620396247.png";
 
 export default function HeroSection() {
   return (
@@ -54,7 +55,7 @@ export default function HeroSection() {
           <div className="flex justify-center lg:justify-end">
             <div className="relative animate-float">
               <img 
-                src="/attached_assets/ChatGPT Image Aug 7, 2025, 08_50_01 PM_1754620396247.png" 
+                src={mikuImage} 
                 alt="Hatsune Miku as Japanese teacher" 
                 className="w-80 h-96 object-cover rounded-3xl anime-border"
                 data-testid="hero-image"
