@@ -158,12 +158,6 @@ export default function LevelOneCourse() {
                 </span>
               </div>
               
-              {index >= 3 && (
-                <div className="w-full h-32 bg-gray-200 rounded-xl mb-4 flex items-center justify-center" data-testid={`lesson-locked-${lesson.id}`}>
-                  <Lock className="text-gray-400 text-2xl" />
-                </div>
-              )}
-              
               <div className="space-y-2 mb-4">
                 {lesson.content.concepts.map((concept, conceptIndex) => (
                   <div key={conceptIndex} className="flex items-center text-sm" data-testid={`lesson-concept-${lesson.id}-${conceptIndex}`}>
