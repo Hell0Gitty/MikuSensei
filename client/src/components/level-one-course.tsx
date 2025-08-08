@@ -158,18 +158,7 @@ export default function LevelOneCourse() {
                 </span>
               </div>
               
-              {index < 3 ? (
-                <img 
-                  src={`https://images.unsplash.com/photo-${
-                    index === 0 ? '1434030216411-0b793f4b4173' : 
-                    index === 1 ? '1456513080510-7bf3a84b82f8' : 
-                    '1517486808906-6ca8b3f04846'
-                  }?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200`}
-                  alt={`Lesson ${lesson.id} materials`}
-                  className="w-full h-32 object-cover rounded-xl mb-4"
-                  data-testid={`lesson-image-${lesson.id}`}
-                />
-              ) : (
+              {index >= 3 && (
                 <div className="w-full h-32 bg-gray-200 rounded-xl mb-4 flex items-center justify-center" data-testid={`lesson-locked-${lesson.id}`}>
                   <Lock className="text-gray-400 text-2xl" />
                 </div>
