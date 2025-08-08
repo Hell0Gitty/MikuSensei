@@ -54,7 +54,7 @@ export default function HeroSection() {
           <div className="flex justify-center lg:justify-end">
             <div className="relative animate-float">
               <img 
-                src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=700" 
+                src="/attached_assets/ChatGPT Image Aug 7, 2025, 08_50_01 PM_1754620396247.png" 
                 alt="Hatsune Miku as Japanese teacher" 
                 className="w-80 h-96 object-cover rounded-3xl anime-border"
                 data-testid="hero-image"
