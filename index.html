@@ -711,7 +711,8 @@
                     
                     ${level.isUnlocked ? `
                         <button class="w-full font-semibold py-3 rounded-full hover:bg-opacity-90 transition-all ${index === 0 ? 'bg-miku-accent text-miku-text' : 'bg-gray-200 text-gray-500 cursor-not-allowed'}" 
-                               ${index !== 0 ? 'disabled' : ''} data-testid="btn-level-${level.id}">
+                               ${index !== 0 ? 'disabled' : ''} data-testid="btn-level-${level.id}"
+                               ${index === 0 ? 'onclick="scrollToSection(\'contact\')"' : ''}>
                             ${index === 0 ? 'Start Here' : `Complete Level ${index}`}
                         </button>
                     ` : `
