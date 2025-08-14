@@ -217,6 +217,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [ ] Mobile app version
 - [ ] Integration with scheduling system
 
+:D
 ---
 
 **Ready to start your Japanese learning journey? Visit the app and begin with Miku Sensei today!** 🎌
