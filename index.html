@@ -596,73 +596,7 @@
             },
         ];
 
-        const lessonsData = [
-            {
-                id: 1,
-                title: "Introduction & あいうえお",
-                description: "Basic Greetings & First Characters",
-                level: 1,
-                content: {
-                    characters: ["あ", "い", "う", "え", "お"],
-                    vocabulary: ["こんにちは", "おはよう", "こんばんは"],
-                    concepts: ["Basic Greetings", "Pronunciation", "Writing Practice"],
-                },
-                isCompleted: true,
-                score: 95,
-            },
-            {
-                id: 2,
-                title: "かきくけこ & Numbers",
-                description: "Numbers 1-10 & K-sounds",
-                level: 1,
-                content: {
-                    characters: ["か", "き", "く", "け", "こ"],
-                    vocabulary: ["いち", "に", "さん", "よん", "ご"],
-                    concepts: ["Numbers 1-10", "K-sound characters", "Writing Practice"],
-                },
-                isCompleted: true,
-                score: 88,
-            },
-            {
-                id: 3,
-                title: "さしすせそ & Family", 
-                description: "Family Members & S-sounds",
-                level: 1,
-                content: {
-                    characters: ["さ", "し", "す", "せ", "そ"],
-                    vocabulary: ["おかあさん", "おとうさん", "あね", "あに"],
-                    concepts: ["Family Members", "S-sound characters", "Cultural Context"],
-                },
-                isCompleted: false,
-                score: 0,
-            },
-            {
-                id: 4,
-                title: "たちつてと & Time",
-                description: "Time Expressions & T-sounds",
-                level: 1,
-                content: {
-                    characters: ["た", "ち", "つ", "て", "と"],
-                    vocabulary: ["あさ", "ひる", "よる", "いま"],
-                    concepts: ["Time Expressions", "T-sound characters", "Daily Schedule"],
-                },
-                isCompleted: false,
-                score: 0,
-            },
-            {
-                id: 5,
-                title: "なにぬねの & Food",
-                description: "Food Vocabulary & N-sounds", 
-                level: 1,
-                content: {
-                    characters: ["な", "に", "ぬ", "ね", "の"],
-                    vocabulary: ["ごはん", "みず", "おちゃ", "たべもの"],
-                    concepts: ["Food Vocabulary", "N-sound characters", "Restaurant Phrases"],
-                },
-                isCompleted: false,
-                score: 0,
-            },
-        ];
+
 
         // Populate levels
         function populateLevels() {
@@ -727,104 +661,11 @@
             lucide.createIcons();
         }
 
-        // Populate lessons
-        function populateLessons() {
-            const container = document.getElementById('lessons-container');
-            container.innerHTML = '';
-            
-            lessonsData.forEach((lesson, index) => {
-                const borderColor = lesson.isCompleted ? 'border-green-200' : 
-                                  index === 2 ? 'border-miku-primary' : 'border-gray-200';
-                
-                const circleColor = lesson.isCompleted ? 'bg-green-500' : 
-                                   index === 2 ? 'bg-miku-primary animate-pulse-slow' : 'bg-gray-300';
-                
-                const statusBadge = lesson.isCompleted ? 'bg-green-100 text-green-800' : 
-                                   index === 2 ? 'bg-miku-primary text-white' : 'bg-gray-200 text-gray-600';
-                
-                const statusText = lesson.isCompleted ? 'Completed' : 
-                                  index === 2 ? 'Current' : 'Locked';
-                
-                const iconName = lesson.isCompleted ? 'check' : 
-                                index === 2 ? 'play' : 'lock';
-                
-                const iconColor = lesson.isCompleted ? 'text-white' : 
-                                 index === 2 ? 'text-white' : 'text-gray-500';
-                
-                const card = document.createElement('div');
-                card.className = `bg-white rounded-2xl p-6 card-hover shadow-lg border-2 ${borderColor}`;
-                card.setAttribute('data-testid', `lesson-card-${lesson.id}`);
-                
-                card.innerHTML = `
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="flex items-center">
-                            <div class="w-10 h-10 rounded-full flex items-center justify-center mr-3 ${circleColor}">
-                                <i data-lucide="${iconName}" class="${iconColor} h-5 w-5"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-nunito font-bold text-lg" data-testid="lesson-title-${lesson.id}">Lesson ${lesson.id}</h3>
-                                <p class="text-sm text-gray-600" data-testid="lesson-description-${lesson.id}">${lesson.description}</p>
-                            </div>
-                        </div>
-                        <span class="text-xs px-2 py-1 rounded-full ${statusBadge}" data-testid="lesson-status-${lesson.id}">${statusText}</span>
-                    </div>
-                    
-                    <div class="space-y-2 mb-4">
-                        ${lesson.content.concepts.map((concept, conceptIndex) => `
-                            <div class="flex items-center text-sm" data-testid="lesson-concept-${lesson.id}-${conceptIndex}">
-                                <i data-lucide="check" class="mr-2 h-4 w-4 ${
-                                    lesson.isCompleted ? 'text-green-500' : 
-                                    index === 2 ? 'text-miku-primary' : 'text-gray-400'
-                                }"></i>
-                                <span class="${index > 2 ? 'text-gray-500' : ''}">${concept}</span>
-                            </div>
-                        `).join('')}
-                    </div>
-                    
-                    ${lesson.isCompleted ? `
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-600" data-testid="lesson-score-${lesson.id}">Score: ${lesson.score}%</span>
-                            <button class="text-miku-primary hover:text-miku-secondary transition-colors" data-testid="btn-review-${lesson.id}">
-                                <i data-lucide="rotate-ccw" class="inline mr-1 h-4 w-4"></i>
-                                Review
-                            </button>
-                        </div>
-                    ` : index === 2 ? `
-                        <button class="w-full bg-miku-primary text-white font-semibold py-3 rounded-full hover:bg-opacity-90 transition-all" data-testid="btn-continue-${lesson.id}">
-                            <i data-lucide="play" class="inline mr-2 h-4 w-4"></i>
-                            Continue Lesson
-                        </button>
-                    ` : `
-                        <div class="text-center text-sm text-gray-500" data-testid="lesson-unlock-requirement-${lesson.id}">
-                            Complete Lesson ${index + 1} to unlock
-                        </div>
-                    `}
-                `;
-                
-                container.appendChild(card);
-            });
-            
-            // Add "More lessons" card
-            const moreCard = document.createElement('div');
-            moreCard.className = 'bg-gradient-to-br from-miku-primary to-miku-secondary p-6 rounded-2xl text-white text-center';
-            moreCard.setAttribute('data-testid', 'more-lessons-card');
-            moreCard.innerHTML = `
-                <div class="mb-4">
-                    <i data-lucide="plus" class="h-16 w-16 mx-auto opacity-75"></i>
-                </div>
-                <h3 class="font-nunito font-bold text-xl mb-2">19 More Lessons</h3>
-                <p class="text-sm opacity-90 mb-4">Continue your journey through hiragana, basic vocabulary, and essential Japanese concepts</p>
-                <div class="text-xs opacity-75">Unlock as you progress</div>
-            `;
-            container.appendChild(moreCard);
-            
-            lucide.createIcons();
-        }
+
 
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
             populateLevels();
-            populateLessons();
             
             // Load the Miku image if provided
             const mikuImageElement = document.getElementById('hero-miku-image');
