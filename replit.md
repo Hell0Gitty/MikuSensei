@@ -1,6 +1,6 @@
 # Overview
 
-This is a Japanese language learning application called "Miku Sensei" that features Hatsune Miku as the virtual teacher. Originally built as a React application, it has been converted to a static HTML5 site. The app provides structured Japanese lessons through different difficulty levels, starting from complete beginners to advanced learners. Users can track their progress, complete lessons, and learn through a combination of characters (Hiragana/Katakana), vocabulary, and interactive content. The site includes Calendly scheduling integration for booking consultations.
+This is a Japanese language learning application called "Miku Sensei" that features Hatsune Miku as the virtual teacher. Originally built as a React application, it has been converted to a static HTML5 site. The app provides structured Japanese lessons through different difficulty levels, starting from complete beginners to advanced learners. Users can learn through interactive quizzes covering Hiragana characters, vocabulary, and numbers, with immediate feedback and scoring. The site includes direct email contact integration for booking consultations.
 
 # User Preferences
 
@@ -9,12 +9,16 @@ Preferred communication style: Simple, everyday language.
 # System Architecture
 
 ## Frontend Architecture
-- **Framework**: React 18 with TypeScript using Vite as the build tool
-- **UI Library**: Radix UI components with shadcn/ui component system for consistent, accessible UI elements
-- **Styling**: Tailwind CSS with custom design tokens and CSS variables for theming
+- **Framework**: Static HTML5 site with vanilla JavaScript for interactive functionality
+- **UI Components**: Custom styled components using Tailwind CSS utility classes
+- **Styling**: Tailwind CSS with custom design tokens and Miku-themed color palette
 - **Fonts**: Custom font stack including Nunito and Open Sans for typography
-- **State Management**: TanStack Query (React Query) for server state management and data fetching
-- **Routing**: Wouter for lightweight client-side routing
+- **Interactive Features**: 
+  - Quiz system with multiple question types (Hiragana, vocabulary, numbers)
+  - Real-time scoring and progress tracking
+  - Animated feedback and results screens
+  - Randomized question selection for replay value
+- **Icons**: Lucide React icon library for consistent iconography
 
 ## Backend Architecture
 - **Runtime**: Node.js with Express.js REST API server

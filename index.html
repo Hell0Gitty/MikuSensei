@@ -140,6 +140,33 @@
         .mobile-menu.active {
             display: block;
         }
+
+        /* Quiz Styles */
+        .quiz-type-btn {
+            transition: all 0.3s ease;
+        }
+
+        .quiz-type-btn.active {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(57, 197, 187, 0.3);
+        }
+
+        .quiz-type-btn:hover:not(.active) {
+            transform: translateY(-1px);
+        }
+
+        .answer-option {
+            transition: all 0.3s ease;
+        }
+
+        .answer-option:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .answer-option:active {
+            transform: translateY(0);
+        }
     </style>
     
     <script>
@@ -177,7 +204,7 @@
                     <button onclick="scrollToSection('home')" class="text-miku-text hover:text-miku-primary transition-colors" data-testid="nav-home">Home</button>
                     <button onclick="scrollToSection('teacher')" class="text-miku-text hover:text-miku-primary transition-colors" data-testid="nav-teacher">Teacher</button>
                     <button onclick="scrollToSection('levels')" class="text-miku-text hover:text-miku-primary transition-colors" data-testid="nav-levels">Levels</button>
-                    <button onclick="scrollToSection('lessons')" class="text-miku-text hover:text-miku-primary transition-colors" data-testid="nav-lessons">Lessons</button>
+                    <button onclick="scrollToSection('quiz')" class="text-miku-text hover:text-miku-primary transition-colors" data-testid="nav-quiz">Quiz</button>
                     <a href="mailto:aerisch@proton.me" class="text-miku-text hover:text-miku-primary transition-colors" data-testid="nav-contact">Contact</a>
                     <button class="btn-primary" data-testid="btn-start-learning">Start Learning</button>
                 </div>
@@ -194,7 +221,7 @@
                 <button onclick="scrollToSection('home')" class="block w-full text-left px-4 py-2 text-miku-text hover:text-miku-primary transition-colors" data-testid="mobile-nav-home">Home</button>
                 <button onclick="scrollToSection('teacher')" class="block w-full text-left px-4 py-2 text-miku-text hover:text-miku-primary transition-colors" data-testid="mobile-nav-teacher">Teacher</button>
                 <button onclick="scrollToSection('levels')" class="block w-full text-left px-4 py-2 text-miku-text hover:text-miku-primary transition-colors" data-testid="mobile-nav-levels">Levels</button>
-                <button onclick="scrollToSection('lessons')" class="block w-full text-left px-4 py-2 text-miku-text hover:text-miku-primary transition-colors" data-testid="mobile-nav-lessons">Lessons</button>
+                <button onclick="scrollToSection('quiz')" class="block w-full text-left px-4 py-2 text-miku-text hover:text-miku-primary transition-colors" data-testid="mobile-nav-quiz">Quiz</button>
                 <a href="mailto:aerisch@proton.me" class="block w-full text-left px-4 py-2 text-miku-text hover:text-miku-primary transition-colors" data-testid="mobile-nav-contact">Contact</a>
                 <div class="px-4 py-2">
                     <button class="w-full btn-primary" data-testid="mobile-btn-start-learning">Start Learning</button>
@@ -362,6 +389,135 @@
     </section>
 
 
+
+    <!-- Interactive Quiz Section -->
+    <section id="quiz" class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-nunito font-bold text-4xl md:text-5xl text-miku-primary mb-4" data-testid="quiz-title">
+                    Interactive Japanese Quiz
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto" data-testid="quiz-subtitle">
+                    Test your Japanese knowledge with our interactive exercises. Choose from hiragana, vocabulary, or grammar quizzes.
+                </p>
+            </div>
+
+            <!-- Quiz Type Selection -->
+            <div class="grid md:grid-cols-3 gap-6 mb-8" id="quiz-type-selector">
+                <button class="quiz-type-btn bg-miku-accent text-miku-text p-6 rounded-2xl shadow-lg card-hover active" 
+                        data-type="hiragana" data-testid="btn-hiragana-quiz">
+                    <div class="text-center">
+                        <i data-lucide="type" class="h-12 w-12 mx-auto mb-4"></i>
+                        <h3 class="font-nunito font-bold text-xl mb-2">Hiragana</h3>
+                        <p class="text-sm opacity-80">Practice reading hiragana characters</p>
+                    </div>
+                </button>
+                
+                <button class="quiz-type-btn bg-miku-primary text-white p-6 rounded-2xl shadow-lg card-hover" 
+                        data-type="vocabulary" data-testid="btn-vocabulary-quiz">
+                    <div class="text-center">
+                        <i data-lucide="book-open" class="h-12 w-12 mx-auto mb-4"></i>
+                        <h3 class="font-nunito font-bold text-xl mb-2">Vocabulary</h3>
+                        <p class="text-sm opacity-80">Learn essential Japanese words</p>
+                    </div>
+                </button>
+                
+                <button class="quiz-type-btn bg-miku-secondary text-white p-6 rounded-2xl shadow-lg card-hover" 
+                        data-type="numbers" data-testid="btn-numbers-quiz">
+                    <div class="text-center">
+                        <i data-lucide="hash" class="h-12 w-12 mx-auto mb-4"></i>
+                        <h3 class="font-nunito font-bold text-xl mb-2">Numbers</h3>
+                        <p class="text-sm opacity-80">Master Japanese numbers 1-10</p>
+                    </div>
+                </button>
+            </div>
+
+            <!-- Quiz Container -->
+            <div id="quiz-container" class="bg-miku-bg rounded-3xl p-8">
+                <!-- Quiz Start Screen -->
+                <div id="quiz-start" class="text-center">
+                    <div class="mb-6">
+                        <div class="w-20 h-20 bg-miku-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="play" class="h-8 w-8 text-white"></i>
+                        </div>
+                        <h3 class="font-nunito font-bold text-2xl mb-2" id="quiz-start-title">Ready to start Hiragana Quiz?</h3>
+                        <p class="text-gray-600 mb-6" id="quiz-start-description">Test your knowledge of basic hiragana characters</p>
+                    </div>
+                    <button class="btn-primary text-lg px-8 py-4" onclick="startQuiz()" data-testid="btn-start-quiz">
+                        <i data-lucide="play" class="inline mr-2 h-5 w-5"></i>
+                        Start Quiz
+                    </button>
+                </div>
+
+                <!-- Quiz Question Screen -->
+                <div id="quiz-question" class="hidden">
+                    <div class="mb-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="text-sm text-gray-600">
+                                Question <span id="current-question">1</span> of <span id="total-questions">5</span>
+                            </div>
+                            <div class="text-sm text-gray-600">
+                                Score: <span id="current-score" class="font-bold text-miku-primary">0</span>
+                            </div>
+                        </div>
+                        <div class="bg-gray-200 rounded-full h-2 mb-6">
+                            <div id="progress-bar" class="bg-miku-primary h-2 rounded-full transition-all duration-300" style="width: 20%"></div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mb-8">
+                        <div class="mb-6">
+                            <div class="text-8xl font-bold text-miku-primary mb-4" id="question-character" data-testid="question-character">あ</div>
+                            <p class="text-xl text-gray-700" id="question-text" data-testid="question-text">What does this hiragana character sound like?</p>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4 max-w-lg mx-auto" id="answer-options">
+                            <!-- Options will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quiz Results Screen -->
+                <div id="quiz-results" class="hidden text-center">
+                    <div class="mb-8">
+                        <div class="w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6" id="results-icon">
+                            <i data-lucide="trophy" class="h-12 w-12"></i>
+                        </div>
+                        <h3 class="font-nunito font-bold text-3xl mb-2" id="results-title">Quiz Complete!</h3>
+                        <p class="text-xl text-gray-600 mb-6" id="results-message">Great job practicing!</p>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-6 mb-8 max-w-md mx-auto">
+                        <div class="grid grid-cols-3 gap-4 text-center">
+                            <div>
+                                <div class="text-2xl font-bold text-miku-primary" id="final-score" data-testid="final-score">4</div>
+                                <div class="text-sm text-gray-600">Correct</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold text-miku-secondary" id="final-total" data-testid="final-total">5</div>
+                                <div class="text-sm text-gray-600">Total</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold text-miku-accent" id="final-percentage" data-testid="final-percentage">80%</div>
+                                <div class="text-sm text-gray-600">Accuracy</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button class="btn-primary" onclick="restartQuiz()" data-testid="btn-restart-quiz">
+                            <i data-lucide="refresh-cw" class="inline mr-2 h-4 w-4"></i>
+                            Try Again
+                        </button>
+                        <button class="btn-outline" onclick="changeQuizType()" data-testid="btn-change-quiz">
+                            <i data-lucide="shuffle" class="inline mr-2 h-4 w-4"></i>
+                            Different Quiz
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Contact Section -->
     <section id="contact" class="py-20 bg-miku-bg">
@@ -542,6 +698,59 @@
             }
         }
 
+        // Quiz Data
+        const quizData = {
+            hiragana: {
+                title: "Hiragana Quiz",
+                description: "Test your knowledge of basic hiragana characters",
+                questions: [
+                    { character: "あ", options: ["a", "i", "u", "e"], correct: 0, type: "character" },
+                    { character: "か", options: ["ka", "ki", "ku", "ke"], correct: 0, type: "character" },
+                    { character: "さ", options: ["sa", "shi", "su", "se"], correct: 0, type: "character" },
+                    { character: "た", options: ["ta", "chi", "tsu", "te"], correct: 0, type: "character" },
+                    { character: "な", options: ["na", "ni", "nu", "ne"], correct: 0, type: "character" },
+                    { character: "は", options: ["ha", "hi", "fu", "he"], correct: 0, type: "character" },
+                    { character: "ま", options: ["ma", "mi", "mu", "me"], correct: 0, type: "character" },
+                    { character: "や", options: ["ya", "yu", "yo", "wa"], correct: 0, type: "character" }
+                ]
+            },
+            vocabulary: {
+                title: "Vocabulary Quiz",
+                description: "Learn essential Japanese words",
+                questions: [
+                    { character: "こんにちは", options: ["Hello", "Goodbye", "Thank you", "Excuse me"], correct: 0, type: "vocabulary" },
+                    { character: "ありがとう", options: ["Hello", "Sorry", "Thank you", "Goodbye"], correct: 2, type: "vocabulary" },
+                    { character: "すみません", options: ["Please", "Excuse me", "You're welcome", "Good morning"], correct: 1, type: "vocabulary" },
+                    { character: "おはよう", options: ["Good night", "Good afternoon", "Good morning", "Good evening"], correct: 2, type: "vocabulary" },
+                    { character: "さようなら", options: ["Hello", "Goodbye", "See you later", "Thank you"], correct: 1, type: "vocabulary" },
+                    { character: "はい", options: ["No", "Yes", "Maybe", "Please"], correct: 1, type: "vocabulary" },
+                    { character: "いいえ", options: ["Yes", "No", "Hello", "Goodbye"], correct: 1, type: "vocabulary" },
+                    { character: "おやすみ", options: ["Good morning", "Good afternoon", "Good night", "Good evening"], correct: 2, type: "vocabulary" }
+                ]
+            },
+            numbers: {
+                title: "Numbers Quiz",
+                description: "Master Japanese numbers 1-10",
+                questions: [
+                    { character: "いち", options: ["1", "2", "3", "4"], correct: 0, type: "numbers" },
+                    { character: "に", options: ["1", "2", "3", "4"], correct: 1, type: "numbers" },
+                    { character: "さん", options: ["1", "2", "3", "4"], correct: 2, type: "numbers" },
+                    { character: "よん", options: ["3", "4", "5", "6"], correct: 1, type: "numbers" },
+                    { character: "ご", options: ["3", "4", "5", "6"], correct: 2, type: "numbers" },
+                    { character: "ろく", options: ["4", "5", "6", "7"], correct: 2, type: "numbers" },
+                    { character: "なな", options: ["6", "7", "8", "9"], correct: 1, type: "numbers" },
+                    { character: "はち", options: ["6", "7", "8", "9"], correct: 2, type: "numbers" }
+                ]
+            }
+        };
+
+        // Quiz state
+        let currentQuizType = 'hiragana';
+        let currentQuestionIndex = 0;
+        let currentScore = 0;
+        let currentQuestions = [];
+        let isAnswering = false;
+
         // Static data for levels and lessons
         const levelsData = [
             {
@@ -644,9 +853,195 @@
 
 
 
+        // Quiz Functions
+        function selectQuizType(type) {
+            currentQuizType = type;
+            
+            // Update active quiz type button
+            document.querySelectorAll('.quiz-type-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.type === type) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Update start screen
+            const quiz = quizData[type];
+            document.getElementById('quiz-start-title').textContent = `Ready to start ${quiz.title}?`;
+            document.getElementById('quiz-start-description').textContent = quiz.description;
+            
+            // Reset quiz state
+            resetQuizState();
+        }
+
+        function resetQuizState() {
+            currentQuestionIndex = 0;
+            currentScore = 0;
+            isAnswering = false;
+            showScreen('quiz-start');
+        }
+
+        function startQuiz() {
+            const quiz = quizData[currentQuizType];
+            currentQuestions = shuffleArray([...quiz.questions]).slice(0, 5);
+            currentQuestionIndex = 0;
+            currentScore = 0;
+            
+            showScreen('quiz-question');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            if (currentQuestionIndex >= currentQuestions.length) {
+                showResults();
+                return;
+            }
+
+            const question = currentQuestions[currentQuestionIndex];
+            const questionType = question.type;
+            
+            // Update progress
+            const progress = ((currentQuestionIndex + 1) / currentQuestions.length) * 100;
+            document.getElementById('progress-bar').style.width = progress + '%';
+            document.getElementById('current-question').textContent = currentQuestionIndex + 1;
+            document.getElementById('total-questions').textContent = currentQuestions.length;
+            document.getElementById('current-score').textContent = currentScore;
+            
+            // Update question display
+            document.getElementById('question-character').textContent = question.character;
+            
+            if (questionType === 'character') {
+                document.getElementById('question-text').textContent = 'What does this hiragana character sound like?';
+            } else if (questionType === 'vocabulary') {
+                document.getElementById('question-text').textContent = 'What does this Japanese word mean?';
+            } else if (questionType === 'numbers') {
+                document.getElementById('question-text').textContent = 'What number does this represent?';
+            }
+            
+            // Create answer options
+            const optionsContainer = document.getElementById('answer-options');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'answer-option bg-white border-2 border-gray-200 hover:border-miku-primary p-4 rounded-xl font-semibold transition-all';
+                button.textContent = option;
+                button.setAttribute('data-testid', `answer-option-${index}`);
+                button.onclick = () => selectAnswer(index);
+                optionsContainer.appendChild(button);
+            });
+            
+            isAnswering = false;
+        }
+
+        function selectAnswer(selectedIndex) {
+            if (isAnswering) return;
+            isAnswering = true;
+            
+            const question = currentQuestions[currentQuestionIndex];
+            const isCorrect = selectedIndex === question.correct;
+            
+            // Show feedback
+            const options = document.querySelectorAll('.answer-option');
+            options.forEach((option, index) => {
+                if (index === question.correct) {
+                    option.classList.add('bg-green-500', 'text-white', 'border-green-500');
+                } else if (index === selectedIndex && !isCorrect) {
+                    option.classList.add('bg-red-500', 'text-white', 'border-red-500');
+                } else {
+                    option.classList.add('opacity-50');
+                }
+            });
+            
+            if (isCorrect) {
+                currentScore++;
+            }
+            
+            // Move to next question after delay
+            setTimeout(() => {
+                currentQuestionIndex++;
+                showQuestion();
+            }, 1500);
+        }
+
+        function showResults() {
+            const totalQuestions = currentQuestions.length;
+            const percentage = Math.round((currentScore / totalQuestions) * 100);
+            
+            // Update results display
+            document.getElementById('final-score').textContent = currentScore;
+            document.getElementById('final-total').textContent = totalQuestions;
+            document.getElementById('final-percentage').textContent = percentage + '%';
+            
+            // Update results icon and message based on performance
+            const resultsIcon = document.getElementById('results-icon');
+            const resultsTitle = document.getElementById('results-title');
+            const resultsMessage = document.getElementById('results-message');
+            
+            if (percentage >= 90) {
+                resultsIcon.className = 'w-24 h-24 bg-miku-accent text-miku-text rounded-full flex items-center justify-center mx-auto mb-6';
+                resultsIcon.innerHTML = '<i data-lucide="trophy" class="h-12 w-12"></i>';
+                resultsTitle.textContent = 'Perfect! 🎉';
+                resultsMessage.textContent = 'Outstanding performance! You\'re a Japanese master!';
+            } else if (percentage >= 70) {
+                resultsIcon.className = 'w-24 h-24 bg-miku-primary text-white rounded-full flex items-center justify-center mx-auto mb-6';
+                resultsIcon.innerHTML = '<i data-lucide="star" class="h-12 w-12"></i>';
+                resultsTitle.textContent = 'Great Job! ⭐';
+                resultsMessage.textContent = 'Well done! Keep practicing to improve even more!';
+            } else if (percentage >= 50) {
+                resultsIcon.className = 'w-24 h-24 bg-miku-secondary text-white rounded-full flex items-center justify-center mx-auto mb-6';
+                resultsIcon.innerHTML = '<i data-lucide="thumbs-up" class="h-12 w-12"></i>';
+                resultsTitle.textContent = 'Good Effort! 👍';
+                resultsMessage.textContent = 'Not bad! A little more practice will help you improve!';
+            } else {
+                resultsIcon.className = 'w-24 h-24 bg-gray-500 text-white rounded-full flex items-center justify-center mx-auto mb-6';
+                resultsIcon.innerHTML = '<i data-lucide="book-open" class="h-12 w-12"></i>';
+                resultsTitle.textContent = 'Keep Learning! 📚';
+                resultsMessage.textContent = 'Don\'t give up! Practice makes perfect!';
+            }
+            
+            showScreen('quiz-results');
+            lucide.createIcons();
+        }
+
+        function restartQuiz() {
+            startQuiz();
+        }
+
+        function changeQuizType() {
+            resetQuizState();
+        }
+
+        function showScreen(screenId) {
+            const screens = ['quiz-start', 'quiz-question', 'quiz-results'];
+            screens.forEach(id => {
+                const element = document.getElementById(id);
+                if (id === screenId) {
+                    element.classList.remove('hidden');
+                } else {
+                    element.classList.add('hidden');
+                }
+            });
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
             populateLevels();
+            
+            // Initialize quiz type buttons
+            document.querySelectorAll('.quiz-type-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    selectQuizType(btn.dataset.type);
+                });
+            });
             
             // Load the Miku image if provided
             const mikuImageElement = document.getElementById('hero-miku-image');
