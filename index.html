@@ -709,17 +709,16 @@
                         `).join('')}
                     </div>
                     
-                    ${level.isUnlocked ? `
-                        <button class="w-full font-semibold py-3 rounded-full hover:bg-opacity-90 transition-all ${index === 0 ? 'bg-miku-accent text-miku-text' : 'bg-gray-200 text-gray-500 cursor-not-allowed'}" 
-                               ${index !== 0 ? 'disabled' : ''} data-testid="btn-level-${level.id}"
-                               ${index === 0 ? 'onclick="scrollToSection(\'contact\')"' : ''}>
-                            ${index === 0 ? 'Start Here' : `Complete Level ${index}`}
+                    ${level.isUnlocked && index !== 0 ? `
+                        <button class="w-full font-semibold py-3 rounded-full hover:bg-opacity-90 transition-all bg-gray-200 text-gray-500 cursor-not-allowed" 
+                               disabled data-testid="btn-level-${level.id}">
+                            Complete Level ${index}
                         </button>
-                    ` : `
+                    ` : !level.isUnlocked ? `
                         <button disabled class="w-full bg-gray-200 text-gray-500 font-semibold py-3 rounded-full cursor-not-allowed" data-testid="btn-level-locked-${level.id}">
                             Complete Level ${index}
                         </button>
-                    `}
+                    ` : ''}
                 `;
                 
                 container.appendChild(card);
